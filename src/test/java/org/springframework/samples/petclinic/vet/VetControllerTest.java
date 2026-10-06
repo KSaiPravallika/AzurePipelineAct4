@@ -1,18 +1,19 @@
 // Java
 package org.springframework.samples.petclinic.vet;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-class VetControllerTest {
+public class VetControllerTest {
 
     private VetRepository vetRepository;
     private VetController vetController;
@@ -22,19 +23,19 @@ class VetControllerTest {
     private Vet jamesCarter;
 
     @Before
-    void setUp() {
+    public void setUp() {
         vetRepository = mock(VetRepository.class);
         vetController = new VetController(vetRepository);
 
-        helenLeary = createVet(1L, "Helen", "Leary");
-        sharonJenkins = createVet(2L, "Sharon", "Jenkins");
-        jamesCarter = createVet(3L, "James", "Carter");
+        helenLeary = createVet(1, "Helen", "Leary");
+        sharonJenkins = createVet(2, "Sharon", "Jenkins");
+        jamesCarter = createVet(3, "James", "Carter");
 
-        when(vetRepository.findAll()).thenReturn(List.of(helenLeary, sharonJenkins, jamesCarter));
+        when(vetRepository.findAll()).thenReturn(Arrays.asList(helenLeary, sharonJenkins, jamesCarter));
     }
 
     @Test
-    void searchVetsMatchesPartialFirstName() {
+    public void searchVetsMatchesPartialFirstName() {
         Vets result = vetController.searchVets("hel");
 
         assertEquals(1, result.getVetList().size());
@@ -43,7 +44,7 @@ class VetControllerTest {
     }
 
     @Test
-    void searchVetsMatchesPartialLastName() {
+    public void searchVetsMatchesPartialLastName() {
         Vets result = vetController.searchVets("jen");
 
         assertEquals(1, result.getVetList().size());
@@ -52,7 +53,7 @@ class VetControllerTest {
     }
 
     @Test
-    void searchVetsIsCaseInsensitive() {
+    public void searchVetsIsCaseInsensitive() {
         Vets result = vetController.searchVets("HELEN");
 
         assertEquals(1, result.getVetList().size());
@@ -61,7 +62,7 @@ class VetControllerTest {
     }
 
     @Test
-    void searchVetsReturnsEmptyListWhenThereAreNoMatches() {
+    public void searchVetsReturnsEmptyListWhenThereAreNoMatches() {
         Vets result = vetController.searchVets("unknown");
 
         assertEquals(0, result.getVetList().size());
@@ -69,7 +70,7 @@ class VetControllerTest {
     }
 
     @Test
-    void searchVetsReturnsAllVetsForEmptySearchTerm() {
+    public void searchVetsReturnsAllVetsForEmptySearchTerm() {
         Vets result = vetController.searchVets("");
 
         assertEquals(3, result.getVetList().size());
@@ -79,7 +80,7 @@ class VetControllerTest {
         verify(vetRepository).findAll();
     }
 
-    private Vet createVet(long id, String firstName, String lastName) {
+    private Vet createVet(int id, String firstName, String lastName) {
         Vet vet = new Vet();
         vet.setId(id);
         vet.setFirstName(firstName);
