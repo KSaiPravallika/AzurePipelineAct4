@@ -27,11 +27,22 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author Arjen Poutsma
  */
+/**
+ * Represents a collection of veterinarians for XML marshalling.
+ * This class is used to expose the list of vets through the XML view.
+ */
 @XmlRootElement
 public class Vets {
 
+    /**
+     * The list of veterinarians managed by this collection.
+     */
     private List<Vet> vets;
 
+    /**
+     * Returns the list of veterinarians.
+     * @return the list of veterinarians
+     */
     @XmlElement
     public List<Vet> getVetList() {
         if (vets == null) {

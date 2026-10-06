@@ -5,6 +5,12 @@
 
 <body>
 
+  <form th:action="@{/vets}" method="get" role="search">
+    <label for="vet-search">Search veterinarians</label>
+    <input id="vet-search" type="search" name="q" placeholder="Name or specialty">
+    <button type="submit">Search</button>
+  </form>
+
   <h2>Veterinarians</h2>
 
   <table id="vets" class="table table-striped">

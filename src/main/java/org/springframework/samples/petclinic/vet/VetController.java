@@ -17,8 +17,10 @@ package org.springframework.samples.petclinic.vet;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -53,6 +55,16 @@ class VetController {
         Vets vets = new Vets();
         vets.getVetList().addAll(this.vets.findAll());
         return vets;
+    }
+
+    @GetMapping("/vets/search")
+    public @ResponseBody Vets searchVets(@RequestParam(name = "name", required = false, defaultValue = "") String name) {
+        String searchTerm = name.toLowerCase(Locale.ROOT);
+        Vets matchingVets = new Vets();
+        matchingVets.getVetList().addAll(this.vets.findAll().stream()
+                .filter(vet -> (vet.getFirstName() + " " + vet.getLastName()).toLowerCase(Locale.ROOT).contains(searchTerm))
+                .toList());
+        return matchingVets;
     }
 
 }
