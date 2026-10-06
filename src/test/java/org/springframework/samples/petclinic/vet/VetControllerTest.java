@@ -6,7 +6,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
@@ -22,7 +21,7 @@ class VetControllerTest {
     private Vet sharonJenkins;
     private Vet jamesCarter;
 
-    @BeforeEach
+    @Before
     void setUp() {
         vetRepository = mock(VetRepository.class);
         vetController = new VetController(vetRepository);
