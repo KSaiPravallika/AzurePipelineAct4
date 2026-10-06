@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author Juergen Hoeller
@@ -63,7 +64,7 @@ class VetController {
         Vets matchingVets = new Vets();
         matchingVets.getVetList().addAll(this.vets.findAll().stream()
                 .filter(vet -> (vet.getFirstName() + " " + vet.getLastName()).toLowerCase(Locale.ROOT).contains(searchTerm))
-                .toList());
+                .collect(Collectors.toList()));
         return matchingVets;
     }
 
